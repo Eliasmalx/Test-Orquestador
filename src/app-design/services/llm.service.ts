@@ -6,7 +6,11 @@ import { ConfigService } from '@nestjs/config';
 export class LlmService {
   constructor(private readonly configService: ConfigService) {}
 
-  async generateJson<T>(prompt: string, runId: string): Promise<T> {
+  async generateStructured<T>(
+    prompt: string,
+    runId: string,
+    jsonSchema: Record<string, any>,
+  ): Promise<T> {
     const apiKey = this.configService.get<string>('OPENROUTER_API_KEY');
     const model =
       this.configService.get<string>('OPENROUTER_MODEL') || 'openai/gpt-4o-mini';
@@ -21,17 +25,24 @@ export class LlmService {
         Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
         'HTTP-Referer': 'http://localhost:3000',
-        'X-Title': 'App Design Orchestrator',
+        'X-Title': 'App Design Orchestrator v2.5',
       },
       body: JSON.stringify({
         model,
         temperature: 0.2,
-        response_format: { type: 'json_object' },
+        provider: {
+          require_parameters: true,
+        },
+        response_format: {
+          type: 'json_schema',
+          json_schema: jsonSchema,
+        },
         session_id: runId,
         messages: [
           {
             role: 'system',
-            content: 'You are a senior product architect. Respond only with valid JSON.',
+            content:
+              'You are a senior NestJS architect. Return only data that matches the schema exactly.',
           },
           {
             role: 'user',

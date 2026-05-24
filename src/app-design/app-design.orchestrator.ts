@@ -4,7 +4,7 @@ import { randomUUID } from 'crypto';
 import { AnalyzeIdeaStep } from './steps/analyze-idea.step';
 import { GenerateRequirementsStep } from './steps/generate-requirements.step';
 import { ProposeArchitectureStep } from './steps/propose-architecture.step';
-import { GenerateBacklogStep } from './steps/generate-backlog.step';
+import { GenerateImplementationPlanStep } from './steps/generate-implementation-plan.step';
 import { DesignContext } from './interfaces/design-context.interface';
 import { OrchestratorStepException } from './exceptions/orchestrator.exception';
 
@@ -14,7 +14,7 @@ export class AppDesignOrchestrator {
     private readonly analyzeIdeaStep: AnalyzeIdeaStep,
     private readonly generateRequirementsStep: GenerateRequirementsStep,
     private readonly proposeArchitectureStep: ProposeArchitectureStep,
-    private readonly generateBacklogStep: GenerateBacklogStep,
+    private readonly generateImplementationPlanStep: GenerateImplementationPlanStep,
   ) {}
 
   async execute(input: DesignContext['input']) {
@@ -31,12 +31,11 @@ export class AppDesignOrchestrator {
       this.analyzeIdeaStep,
       this.generateRequirementsStep,
       this.proposeArchitectureStep,
-      this.generateBacklogStep,
+      this.generateImplementationPlanStep,
     ];
 
     for (const step of steps) {
       context.meta.currentStep = step.name;
-
       const result = await step.execute(context);
       context = result.context;
 

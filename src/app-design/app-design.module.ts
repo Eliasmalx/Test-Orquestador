@@ -5,7 +5,7 @@ import { AppDesignOrchestrator } from './app-design.orchestrator';
 import { AnalyzeIdeaStep } from './steps/analyze-idea.step';
 import { GenerateRequirementsStep } from './steps/generate-requirements.step';
 import { ProposeArchitectureStep } from './steps/propose-architecture.step';
-import { GenerateBacklogStep } from './steps/generate-backlog.step';
+import { GenerateImplementationPlanStep } from './steps/generate-implementation-plan.step';
 import { LlmService } from './services/llm.service';
 
 @Module({
@@ -15,7 +15,7 @@ import { LlmService } from './services/llm.service';
     AnalyzeIdeaStep,
     GenerateRequirementsStep,
     ProposeArchitectureStep,
-    GenerateBacklogStep,
+    GenerateImplementationPlanStep,
     LlmService,
   ],
 })

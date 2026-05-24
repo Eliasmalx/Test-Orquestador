@@ -2,81 +2,46 @@
 import { DesignContext } from '../interfaces/design-context.interface';
 
 export class AppDesignPrompts {
-  static analyze(context: DesignContext) {
+  static implementationPlan(context: DesignContext) {
     return `
-Analiza esta idea de aplicación y responde SOLO JSON válido.
+Diseña una implementación inicial real para una app usando NestJS backend.
 
-INPUT:
-- idea: ${context.input.idea}
-- targetUsers: ${context.input.targetUsers ?? 'unknown'}
-- platform: ${context.input.platform ?? 'unknown'}
+IDEA:
+- ${context.input.idea}
 
-JSON schema:
-{
-  "appType": "string",
-  "coreProblem": "string",
-  "complexity": "low|medium|high",
-  "summary": "string"
-}
-`;
-  }
+TARGET USERS:
+- ${context.input.targetUsers ?? 'unknown'}
 
-  static requirements(context: DesignContext) {
-    return `
-Genera requisitos para esta app y responde SOLO JSON válido.
+PLATFORM:
+- ${context.input.platform ?? 'web'}
 
-INPUT:
-- idea: ${context.input.idea}
-- analysisSummary: ${context.analysis?.summary ?? ''}
+ANALYSIS:
+- ${context.analysis?.summary ?? 'not available'}
 
-JSON schema:
-{
-  "functional": ["string"],
-  "nonFunctional": ["string"]
-}
-`;
-  }
+REQUIREMENTS:
+- Functional: ${(context.requirements?.functional ?? []).join(', ')}
+- NonFunctional: ${(context.requirements?.nonFunctional ?? []).join(', ')}
 
-  static architecture(context: DesignContext) {
-    return `
-Propón arquitectura técnica para esta app y responde SOLO JSON válido.
+ARCHITECTURE BASE:
+- frontend: ${context.architecture?.frontend ?? 'unknown'}
+- backend: ${context.architecture?.backend ?? 'NestJS'}
+- database: ${context.architecture?.database ?? 'unknown'}
 
-INPUT:
-- idea: ${context.input.idea}
-- platform: ${context.input.platform ?? 'web'}
-- complexity: ${context.analysis?.complexity ?? 'medium'}
-- targetUsers: ${context.input.targetUsers ?? 'unknown'}
+Necesito:
+1. blueprint del proyecto,
+2. módulos NestJS recomendados,
+3. rutas API,
+4. archivos iniciales listos para copiar,
+5. siguientes pasos.
 
-JSON schema:
-{
-  "frontend": "string",
-  "backend": "string",
-  "database": "string",
-  "modules": ["string"],
-  "integrations": ["string"]
-}
-`;
-  }
-
-  static backlog(context: DesignContext) {
-    return `
-Genera backlog inicial para MVP y responde SOLO JSON válido.
-
-INPUT:
-- idea: ${context.input.idea}
-- appType: ${context.analysis?.appType ?? ''}
-- modules: ${(context.architecture?.modules ?? []).join(', ')}
-
-JSON schema:
-{
-  "items": [
-    {
-      "title": "string",
-      "description": "string",
-      "priority": "high|medium|low"
-    }
-  ]
-}
+Los archivos generados deben ser pequeños pero reales.
+Prioriza:
+- module
+- controller
+- service
+- dto
+- entity/interface
+- README técnico
 `;
   }
 }

@@ -23,6 +23,28 @@ export interface DesignContext {
     modules?: string[];
     integrations?: string[];
   };
+  blueprint?: {
+    projectName: string;
+    summary: string;
+    modules: Array<{
+      name: string;
+      responsibility: string;
+      entities?: string[];
+      endpoints?: string[];
+    }>;
+  };
+  generatedFiles?: Array<{
+    path: string;
+    description: string;
+    language: 'ts' | 'json' | 'md';
+    content: string;
+  }>;
+  apiRoutes?: Array<{
+    method: 'GET' | 'POST' | 'PATCH' | 'DELETE';
+    path: string;
+    description: string;
+    module: string;
+  }>;
   backlog?: Array<{
     title: string;
     description: string;

@@ -2,6 +2,62 @@
 import { DesignContext } from '../interfaces/design-context.interface';
 
 export class AppDesignPrompts {
+  static analyze(context: DesignContext) {
+    return `
+Analiza esta idea de aplicación y responde SOLO JSON válido.
+
+INPUT:
+- idea: ${context.input.idea}
+- targetUsers: ${context.input.targetUsers ?? 'unknown'}
+- platform: ${context.input.platform ?? 'unknown'}
+
+JSON schema:
+{
+  "appType": "string",
+  "coreProblem": "string",
+  "complexity": "low|medium|high",
+  "summary": "string"
+}
+`;
+  }
+
+  static requirements(context: DesignContext) {
+    return `
+Genera requisitos para esta app y responde SOLO JSON válido.
+
+INPUT:
+- idea: ${context.input.idea}
+- analysisSummary: ${context.analysis?.summary ?? ''}
+
+JSON schema:
+{
+  "functional": ["string"],
+  "nonFunctional": ["string"]
+}
+`;
+  }
+
+  static architecture(context: DesignContext) {
+    return `
+Propón arquitectura técnica para esta app y responde SOLO JSON válido.
+
+INPUT:
+- idea: ${context.input.idea}
+- platform: ${context.input.platform ?? 'web'}
+- complexity: ${context.analysis?.complexity ?? 'medium'}
+- targetUsers: ${context.input.targetUsers ?? 'unknown'}
+
+JSON schema:
+{
+  "frontend": "string",
+  "backend": "string",
+  "database": "string",
+  "modules": ["string"],
+  "integrations": ["string"]
+}
+`;
+  }
+
   static implementationPlan(context: DesignContext) {
     return `
 Diseña una implementación inicial real para una app usando NestJS backend.
